@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIG PixClean</title>
+<meta name="description" content="Xóa dấu vết AI &amp; metadata khỏi ảnh — xử lý ngay trên trình duyệt, ảnh không rời khỏi máy bạn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F3EC;
+  --surface:#FFFFFF;
+  --surface-2:#FCFAF4;
+  --ink:#211C15;
+  --muted:#6E6555;
+  --faint:#948A77;
+  --hairline:#E7DECD;
+  --hairline-strong:#D8CDB6;
+  --gold:#A9803E;
+  --gold-bright:#B8873A;
+  --gold-soft:#F0E4CD;
+  --success:#3E7A56;
+  --success-soft:#E3EFE5;
+  --warn:#B4712A;
+  --warn-soft:#F6E9D3;
+  --danger:#B0473B;
+  --danger-soft:#F6E0DB;
+  --shadow:0 1px 2px rgba(33,28,21,.04),0 12px 32px -12px rgba(33,28,21,.16);
+  --radius:14px;
+  --radius-sm:9px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14110B;
+    --surface:#1E1A12;
+    --surface-2:#231E15;
+    --ink:#F1EBDD;
+    --muted:#A99E88;
+    --faint:#877D68;
+    --hairline:#332C1E;
+    --hairline-strong:#453B28;
+    --gold:#D4AA5C;
+    --gold-bright:#E0B667;
+    --gold-soft:#332913;
+    --success:#7BB68E;
+    --success-soft:#20301F;
+    --warn:#E3A759;
+    --warn-soft:#352713;
+    --danger:#E08A7D;
+    --danger-soft:#37211C;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14110B;
+  --surface:#1E1A12;
+  --surface-2:#231E15;
+  --ink:#F1EBDD;
+  --muted:#A99E88;
+  --faint:#877D68;
+  --hairline:#332C1E;
+  --hairline-strong:#453B28;
+  --gold:#D4AA5C;
+  --gold-bright:#E0B667;
+  --gold-soft:#332913;
+  --success:#7BB68E;
+  --success-soft:#20301F;
+  --warn:#E3A759;
+  --warn-soft:#352713;
+  --danger:#E08A7D;
+  --danger-soft:#37211C;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.wrap{max-width:900px;margin:0 auto;padding:32px 20px 72px}
+a{color:var(--gold)}
+.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* Header */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}
+.brand{display:flex;align-items:center;gap:13px}
+.mark{
+  width:42px;height:42px;border-radius:11px;flex:none;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold));
+  display:grid;place-items:center;
+  box-shadow:0 6px 16px -6px color-mix(in srgb,var(--gold) 60%,transparent);
+}
+.mark svg{width:23px;height:23px;display:block}
+.brand h1{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em;line-height:1}
+.brand .sub{font-size:12.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+.brand .sub b{color:var(--gold);font-weight:600}
+.theme-btn{
+  border:1px solid var(--hairline-strong);background:var(--surface);color:var(--muted);
+  width:38px;height:38px;border-radius:10px;cursor:pointer;display:grid;place-items:center;
+  transition:color .15s,border-color .15s;flex:none;
+}
+.theme-btn:hover{color:var(--ink);border-color:var(--gold)}
+.theme-btn svg{width:18px;height:18px}
+
+/* Hero copy */
+.hero{margin-bottom:26px}
+.hero h2{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:clamp(28px,5vw,40px);
+  line-height:1.08;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance;
+}
+.hero h2 .g{color:var(--gold)}
+.hero p{margin:0;color:var(--muted);font-size:16.5px;max-width:60ch}
+
+/* Dropzone */
+.drop{
+  margin-top:22px;border:1.5px dashed var(--hairline-strong);border-radius:var(--radius);
+  background:var(--surface-2);padding:44px 28px;text-align:center;cursor:pointer;
+  transition:border-color .18s,background .18s,transform .05s;
+}
+.drop:hover{border-color:var(--gold);background:color-mix(in srgb,var(--gold-soft) 45%,var(--surface-2))}
+.drop.drag{border-color:var(--gold);border-style:solid;background:color-mix(in srgb,var(--gold-soft) 70%,var(--surface))}
+.drop .ic{width:52px;height:52px;margin:0 auto 14px;color:var(--gold)}
+.drop .ic svg{width:100%;height:100%}
+.drop .dz-title{font-weight:600;font-size:17px;margin:0 0 5px}
+.drop .dz-hint{color:var(--muted);font-size:14px;margin:0}
+.drop .dz-formats{margin-top:12px;font-size:12px;color:var(--faint);letter-spacing:.04em;text-transform:uppercase}
+
+/* Result card */
+.result{margin-top:24px;display:none;flex-direction:column;gap:18px}
+.result.show{display:flex}
+
+.verdict{
+  border-radius:var(--radius);padding:18px 20px;display:flex;gap:15px;align-items:flex-start;
+  border:1px solid transparent;
+}
+.verdict .vic{width:26px;height:26px;flex:none;margin-top:1px}
+.verdict .vic svg{width:100%;height:100%}
+.verdict h3{margin:0 0 3px;font-size:17px;font-weight:600;font-family:"Fraunces",Georgia,serif}
+.verdict p{margin:0;font-size:14.5px;line-height:1.5}
+.verdict.detected{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%,transparent);color:var(--ink)}
+.verdict.detected .vic{color:var(--warn)}
+.verdict.clean{background:var(--success-soft);border-color:color-mix(in srgb,var(--success) 30%,transparent)}
+.verdict.clean .vic{color:var(--success)}
+
+/* card grid */
+.grid{display:grid;grid-template-columns:190px 1fr;gap:20px;align-items:start}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+.preview{
+  border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);
+  padding:12px;box-shadow:var(--shadow);
+}
+.preview .thumb{
+  width:100%;aspect-ratio:1/1;border-radius:var(--radius-sm);overflow:hidden;
+  background:
+    linear-gradient(45deg,var(--hairline) 25%,transparent 25%,transparent 75%,var(--hairline) 75%) 0 0/16px 16px,
+    linear-gradient(45deg,var(--hairline) 25%,var(--surface-2) 25%,var(--surface-2) 75%,var(--hairline) 75%) 8px 8px/16px 16px;
+  display:grid;place-items:center;
+}
+.preview .thumb img{max-width:100%;max-height:100%;display:block}
+.preview .meta{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.7}
+.preview .meta .fname{color:var(--ink);font-weight:600;word-break:break-all;font-size:13px}
+.preview .meta .row{display:flex;justify-content:space-between;gap:8px}
+
+.panel{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.panel .phead{padding:14px 18px;border-bottom:1px solid var(--hairline);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.panel .phead .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:600}
+.panel .phead .count{font-size:12.5px;color:var(--muted)}
+
+.findings{list-style:none;margin:0;padding:0}
+.findings li{padding:13px 18px;border-bottom:1px solid var(--hairline);display:flex;gap:12px;align-items:flex-start}
+.findings li:last-child{border-bottom:none}
+.findings .chip{
+  flex:none;font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;margin-top:1px;white-space:nowrap;min-width:64px;text-align:center;
+}
+.chip.ai{background:var(--danger-soft);color:var(--danger)}
+.chip.meta{background:var(--gold-soft);color:var(--gold)}
+.chip.ok{background:var(--success-soft);color:var(--success)}
+.findings .ftxt{flex:1;min-width:0}
+.findings .ftxt .ft{font-weight:600;font-size:14.5px;line-height:1.35}
+.findings .ftxt .fd{font-size:13px;color:var(--muted);margin-top:2px;word-break:break-word}
+.findings .fsize{flex:none;font-size:12px;color:var(--faint);white-space:nowrap;margin-top:2px}
+.empty{padding:22px 18px;color:var(--muted);font-size:14px;text-align:center}
+
+/* Options */
+.options{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);padding:6px 4px}
+.opt{display:flex;gap:13px;padding:13px 16px;align-items:flex-start;cursor:pointer;border-radius:var(--radius-sm)}
+.opt:hover{background:var(--surface-2)}
+.opt input{margin-top:3px;width:17px;height:17px;accent-color:var(--gold);flex:none;cursor:pointer}
+.opt .ot{font-weight:600;font-size:14.5px}
+.opt .od{font-size:13px;color:var(--muted);margin-top:1px}
+.suboptions{padding:2px 16px 14px 46px;display:none}
+.suboptions.show{display:block}
+.sub-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13.5px;color:var(--muted)}
+.sub-row label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.sub-row select,.sub-row input[type=range]{accent-color:var(--gold)}
+.sub-row select{font-family:inherit;font-size:13px;padding:4px 8px;border-radius:7px;border:1px solid var(--hairline-strong);background:var(--surface);color:var(--ink)}
+#qualVal{color:var(--gold);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Actions */
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{
+  font-family:inherit;font-size:15px;font-weight:600;border-radius:11px;padding:13px 22px;cursor:pointer;
+  border:1px solid transparent;display:inline-flex;align-items:center;gap:9px;transition:transform .05s,box-shadow .15s,background .15s;
+}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:linear-gradient(150deg,var(--gold-bright),var(--gold));color:#fff;box-shadow:0 8px 20px -8px color-mix(in srgb,var(--gold) 65%,transparent)}
+.btn.primary:hover{box-shadow:0 10px 26px -8px color-mix(in srgb,var(--gold) 75%,transparent)}
+.btn.ghost{background:var(--surface);border-color:var(--hairline-strong);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn svg{width:18px;height:18px}
+.result-note{font-size:13px;color:var(--muted)}
+.result-note.done{color:var(--success);font-weight:600}
+.result-note b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* footer note */
+.footnote{margin-top:34px;padding:16px 18px;border-radius:var(--radius);background:var(--surface-2);border:1px solid var(--hairline);font-size:13px;color:var(--muted);line-height:1.6}
+.footnote b{color:var(--ink)}
+.footnote .wm{color:var(--warn);font-weight:600}
+footer.site{margin-top:28px;text-align:center;font-size:12.5px;color:var(--faint);letter-spacing:.02em}
+footer.site .dot{margin:0 7px;opacity:.5}
+
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/>
+          <path d="m8.5 12 2.4 2.4L15.8 9.5"/>
+        </svg>
+      </div>
+      <div>
+        <h1>VIG PixClean</h1>
+        <div class="sub"><b>Xử lý ngay trên máy</b> · ảnh không rời trình duyệt</div>
+      </div>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="Đổi giao diện sáng/tối" aria-label="Đổi giao diện sáng/tối">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+      </svg>
+    </button>
+  </header>
+
+  <section class="hero">
+    <h2>Gỡ <span class="g">dấu vết AI</span> &amp; metadata khỏi ảnh của bạn.</h2>
+    <p>Ảnh tạo từ ChatGPT, Gemini, Firefly… mang theo chữ ký C2PA khai báo “tạo bởi AI”, cùng EXIF/GPS ẩn. VIG PixClean đọc và xoá sạch chúng — tất cả chạy trong trình duyệt, không upload đi đâu cả.</p>
+  </section>
+
+  <div class="drop" id="drop" tabindex="0" role="button" aria-label="Chọn hoặc kéo thả ảnh vào đây">
+    <div class="ic" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+      </svg>
+    </div>
+    <p class="dz-title">Kéo thả ảnh vào đây, hoặc bấm để chọn</p>
+    <p class="dz-hint">Chọn file rồi xem ngay những gì ẩn bên trong</p>
+    <div class="dz-formats">PNG · JPG · WEBP</div>
+    <input type="file" id="file" accept="image/png,image/jpeg,image/webp" class="sr">
+  </div>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="verdict" id="verdict">
+      <div class="vic" id="verdictIcon"></div>
+      <div><h3 id="verdictTitle"></h3><p id="verdictText"></p></div>
+    </div>
+
+    <div class="grid">
+      <div class="preview">
+        <div class="thumb"><img id="thumb" alt="Xem trước ảnh đã chọn"></div>
+        <div class="meta">
+          <div class="fname" id="mName"></div>
+          <div class="row"><span>Định dạng</span><span id="mType" class="mono"></span></div>
+          <div class="row"><span>Kích thước ảnh</span><span id="mDim" class="mono"></span></div>
+          <div class="row"><span>Dung lượng</span><span id="mSize" class="mono"></span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <span class="lbl">Phát hiện bên trong file</span>
+          <span class="count" id="fCount"></span>
+        </div>
+        <ul class="findings" id="findings"></ul>
+      </div>
+    </div>
+
+    <div class="options">
+      <label class="opt">
+        <input type="checkbox" id="optMeta" checked>
+        <div>
+          <div class="ot">Xoá toàn bộ metadata</div>
+          <div class="od">Loại bỏ C2PA, EXIF, GPS, XMP, IPTC, chú thích ẩn. Giữ nguyên pixel — không giảm chất lượng.</div>
+        </div>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="optReenc">
+        <div>
+          <div class="ot">Xử lý lại pixel <span style="color:var(--warn);font-weight:600">(chống watermark ẩn)</span></div>
+          <div class="od">Vẽ lại &amp; nén lại ảnh để phá watermark ẩn kiểu SynthID nằm trong điểm ảnh. Ảnh sẽ được re-encode.</div>
+        </div>
+      </label>
+      <div class="suboptions" id="subOpts">
+        <div class="sub-row">
+          <label>Định dạng xuất:
+            <select id="reFormat">
+              <option value="image/png">PNG (không mất chất lượng)</option>
+              <option value="image/jpeg" selected>JPG (nhẹ hơn)</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </label>
+          <label id="qualWrap">Chất lượng: <input type="range" id="reQual" min="70" max="100" value="92"> <span id="qualVal">92%</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="cleanBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span id="cleanLabel">Làm sạch &amp; tải về</span>
+      </button>
+      <button class="btn ghost" id="resetBtn">Chọn ảnh khác</button>
+      <span class="result-note" id="doneNote"></span>
+    </div>
+  </section>
+
+  <div class="footnote">
+    <b>Lưu ý về watermark trong pixel.</b> Xoá metadata gỡ được chữ ký C2PA và mọi thông tin ẩn trong file. Nhưng một số dịch vụ nhúng thêm <span class="wm">watermark ẩn ngay trong điểm ảnh</span> — thứ này chỉ mờ đi khi bạn <b>xử lý lại pixel</b> (bật tuỳ chọn thứ hai), resize hoặc chụp lại màn hình, và không đảm bảo mất hoàn toàn.
+  </div>
+
+  <footer class="site">
+    VIG PixClean <span class="dot">·</span> chạy 100% offline trong trình duyệt <span class="dot">·</span> không có server, không lưu, không gửi đi
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Theme ---------- */
+var root=document.documentElement, themeBtn=document.getElementById('themeBtn'), themeIcon=document.getElementById('themeIcon');
+var SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+var MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+function applyTheme(t){ if(t){root.setAttribute('data-theme',t);} else {root.removeAttribute('data-theme');}
+  var dark = t==='dark' || (!t && window.matchMedia('(prefers-color-scheme:dark)').matches);
+  themeIcon.innerHTML = dark ? SUN : MOON;
+}
+var saved=null; try{saved=localStorage.getItem('vig-pixclean-theme');}catch(e){}
+applyTheme(saved);
+themeBtn.addEventListener('click',function(){
+  var cur=root.getAttribute('data-theme');
+  var next = cur==='dark' ? 'light' : cur==='light' ? 'dark' : (window.matchMedia('(prefers-color-scheme:dark)').matches?'light':'dark');
+  applyTheme(next); try{localStorage.setItem('vig-pixclean-theme',next);}catch(e){}
+});
+
+/* ---------- Helpers ---------- */
+function fmtBytes(n){ if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(1)+' KB'; return (n/1048576).toFixed(2)+' MB'; }
+function bytesToLatin1(u8,start,len){ var s=''; var end=Math.min(start+len,u8.length); for(var i=start;i<end;i++) s+=String.fromCharCode(u8[i]); return s; }
+function u32be(u8,o){ return (u8[o]<<24 | u8[o+1]<<16 | u8[o+2]<<8 | u8[o+3])>>>0; }
+
+// AI markers to scan for inside chunk/segment payloads
+var AI_KEYS=['c2pa','contentcred','trainedalgorithmicmedia','digitalsourcetype','openai','gpt-image','dall','midjourney','stability','stable diffusion','firefly','synthid','generativeml','composite-with'];
+function scanAI(text){
+  var low=text.toLowerCase(), hits=[];
+  for(var i=0;i<AI_KEYS.length;i++){ if(low.indexOf(AI_KEYS[i])>=0) hits.push(AI_KEYS[i]); }
+  return hits;
+}
+function describeAI(hits){
+  var d=[];
+  if(hits.indexOf('c2pa')>=0||hits.indexOf('contentcred')>=0) d.push('chữ ký C2PA / Content Credentials');
+  if(hits.indexOf('openai')>=0||hits.indexOf('gpt-image')>=0||hits.indexOf('dall')>=0) d.push('nguồn OpenAI (ChatGPT)');
+  if(hits.indexOf('firefly')>=0) d.push('Adobe Firefly');
+  if(hits.indexOf('midjourney')>=0) d.push('Midjourney');
+  if(hits.indexOf('stability')>=0||hits.indexOf('stable diffusion')>=0) d.push('Stable Diffusion');
+  if(hits.indexOf('synthid')>=0) d.push('watermark SynthID (Google)');
+  if(hits.indexOf('trainedalgorithmicmedia')>=0||hits.indexOf('digitalsourcetype')>=0) d.push('nhãn “tạo bởi AI”');
+  return d;
+}
+
+/* ---------- Format parsers ----------
+   Each returns { format, findings:[{label,type,detail,size,ai:bool}], clean:function(re-encode already handled separately) -> Uint8Array }
+*/
+var PNG_KEEP={IHDR:1,PLTE:1,IDAT:1,IEND:1,tRNS:1,gAMA:1,cHRM:1,sRGB:1,iCCP:1,bKGD:1,pHYs:1,sBIT:1,hIST:1};
+function parsePNG(u8){
+  var findings=[], keepChunks=[], i=8, ok=true;
+  var PNG_LABEL={ caBX:'C2PA / Content Credentials', tEXt:'Chú thích văn bản (tEXt)', iTXt:'Chú thích văn bản (iTXt)', zTXt:'Chú thích nén (zTXt)', eXIf:'Dữ liệu EXIF', tIME:'Thời gian sửa đổi', iCCP:'Hồ sơ màu ICC' };
+  while(i+8<=u8.length){
+    var len=u32be(u8,i); var type=bytesToLatin1(u8,i+4,4);
+    if(len<0 || i+12+len>u8.length){ ok=false; break; }
+    var dataStart=i+8, payload=bytesToLatin1(u8,dataStart,Math.min(len,4096));
+    var whole=u8.subarray(i,i+12+len);
+    var isMeta = !PNG_KEEP[type] || type==='iCCP';
+    if(isMeta){
+      var ai=scanAI(payload+type);
+      var label = PNG_LABEL[type] || ('Chunk phụ “'+type+'”');
+      var detail;
+      if(ai.length){ detail='Khai báo: '+describeAI(ai).join(', '); }
+      else if(type==='tEXt'||type==='iTXt'||type==='zTXt'){ var k=payload.split(' ')[0]; detail='Khoá: '+(k||'—'); }
+      else if(type==='eXIf'){ detail='Thông tin máy/ngày chụp, có thể gồm GPS'; }
+      else { detail='Dữ liệu không thuộc hình ảnh'; }
+      findings.push({label:label,type:ai.length?'ai':'meta',detail:detail,size:len,ai:ai.length>0});
+    } else {
+      keepChunks.push(whole);
+    }
+    i+=12+len;
+    if(type==='IEND') break;
+  }
+  if(!ok) return null;
+  return {
+    format:'PNG',
+    findings:findings,
+    clean:function(){
+      var total=8; for(var c=0;c<keepChunks.length;c++) total+=keepChunks[c].length;
+      var out=new Uint8Array(total); out.set(u8.subarray(0,8),0); var p=8;
+      for(var c2=0;c2<keepChunks.length;c2++){ out.set(keepChunks[c2],p); p+=keepChunks[c2].length; }
+      return out;
+    }
+  };
+}
+
+function parseJPEG(u8){
+  var findings=[], i=2, ok=(u8[0]===0xFF&&u8[1]===0xD8), segments=[];
+  if(!ok) return null;
+  while(i+4<=u8.length){
+    if(u8[i]!==0xFF){ ok=false; break; }
+    var marker=u8[i+1];
+    if(marker===0xD9){ break; } // EOI
+    if(marker===0xDA){ // SOS -> keep rest of file as-is
+      segments.push({keep:true, start:i, end:u8.length});
+      i=u8.length; break;
+    }
+    if(marker>=0xD0 && marker<=0xD7){ i+=2; continue; } // RSTn (no length)
+    var len=(u8[i+2]<<8|u8[i+3]);
+    var segEnd=i+2+len;
+    if(len<2 || segEnd>u8.length){ ok=false; break; }
+    var payloadStr=bytesToLatin1(u8,i+4,Math.min(len-2,4096));
+    var isMeta=false, label='', detail='', ai=[];
+    if(marker===0xE1){ // APP1
+      if(payloadStr.indexOf('Exif')===0){ isMeta=true; label='Dữ liệu EXIF'; detail='Máy ảnh, ngày chụp, có thể gồm toạ độ GPS'; if(/gps/i.test(payloadStr)) detail='⚠ Chứa toạ độ GPS + thông tin máy chụp'; }
+      else if(payloadStr.toLowerCase().indexOf('http://ns.adobe.com/xap')>=0||payloadStr.toLowerCase().indexOf('xmpmeta')>=0){ isMeta=true; label='XMP metadata'; ai=scanAI(payloadStr); detail=ai.length?('Khai báo: '+describeAI(ai).join(', ')):'Thông tin chỉnh sửa / phần mềm'; }
+      else { isMeta=true; label='APP1'; detail='Metadata ứng dụng'; }
+    } else if(marker===0xEB){ // APP11 JUMBF / C2PA
+      isMeta=true; label='C2PA / Content Credentials'; ai=scanAI(payloadStr); detail=ai.length?('Khai báo: '+describeAI(ai).join(', ')):'Chữ ký nguồn gốc nội dung (JUMBF)'; if(!ai.length) ai=['c2pa'];
+    } else if(marker===0xED){ // APP13 IPTC/Photoshop
+      isMeta=true; label='IPTC / Photoshop'; detail='Chú thích, tác giả, bản quyền';
+    } else if(marker===0xEE){ // APP14 Adobe
+      isMeta=true; label='Adobe (APP14)'; detail='Đánh dấu phần mềm Adobe';
+    } else if(marker===0xE2){ // APP2 ICC / MPF
+      if(payloadStr.indexOf('ICC_PROFILE')>=0){ isMeta=false; } else { isMeta=true; label='APP2'; detail='Dữ liệu mở rộng'; }
+    } else if(marker>=0xE3 && marker<=0xEF){ // other APPn
+      isMeta=true; label='APP'+(marker-0xE0); detail='Metadata ứng dụng'; ai=scanAI(payloadStr);
+    } else if(marker===0xFE){ // COM
+      isMeta=true; label='Chú thích (COM)'; detail=payloadStr.slice(0,60)||'Ghi chú ẩn'; ai=scanAI(payloadStr);
+    }
+    if(ai&&ai.length){ isMeta=true; }
+    segments.push({keep:!isMeta, start:i, end:segEnd, marker:marker});
+    if(isMeta){ findings.push({label:label,type:(ai&&ai.length)?'ai':'meta',detail:detail,size:len-2,ai:(ai&&ai.length)>0}); }
+    i=segEnd;
+  }
+  if(!ok) return null;
+  // ensure SOI kept
+  return {
+    format:'JPEG',
+    findings:findings,
+    clean:function(){
+      var parts=[u8.subarray(0,2)]; // SOI
+      for(var s=0;s<segments.length;s++){ if(segments[s].keep) parts.push(u8.subarray(segments[s].start,segments[s].end)); }
+      var total=0; for(var t=0;t<parts.length;t++) total+=parts[t].length;
+      var out=new Uint8Array(total),p=0;
+      for(var q=0;q<parts.length;q++){ out.set(parts[q],p); p+=parts[q].length; }
+      return out;
+    }
+  };
+}
+
+function parseWEBP(u8){
+  if(bytesToLatin1(u8,0,4)!=='RIFF'||bytesToLatin1(u8,8,4)!=='WEBP') return null;
+  var findings=[], keep=[], i=12, ok=true, vp8xIdx=-1;
+  while(i+8<=u8.length){
+    var fourcc=bytesToLatin1(u8,i,4);
+    var size=(u8[i+4]|u8[i+5]<<8|u8[i+6]<<16|u8[i+7]*16777216)>>>0;
+    var padded=size+(size&1);
+    if(i+8+size>u8.length){ ok=false; break; }
+    var chunk=u8.subarray(i,i+8+padded);
+    var lc=fourcc.trim().toUpperCase();
+    if(lc==='EXIF'||lc==='XMP'){
+      var pl=bytesToLatin1(u8,i+8,Math.min(size,4096)); var ai=scanAI(pl);
+      findings.push({label:lc==='EXIF'?'Dữ liệu EXIF':'XMP metadata',type:ai.length?'ai':'meta',detail:ai.length?('Khai báo: '+describeAI(ai).join(', ')):(lc==='EXIF'?'Máy ảnh, ngày chụp, có thể gồm GPS':'Thông tin chỉnh sửa'),size:size,ai:ai.length>0});
+    } else {
+      if(fourcc==='VP8X') vp8xIdx=keep.length;
+      keep.push({fourcc:fourcc,chunk:chunk});
+    }
+    i+=8+padded;
+  }
+  if(!ok) return null;
+  return {
+    format:'WEBP',
+    findings:findings,
+    clean:function(){
+      // clear EXIF/XMP flag bits in VP8X (byte at offset 8 of that chunk: bit3=EXIF? bit2=XMP?) — clear both to be safe
+      var body=[]; var total=0;
+      for(var k=0;k<keep.length;k++){
+        var c=keep[k].chunk;
+        if(keep[k].fourcc==='VP8X'){ c=c.slice(); c[8]=c[8]&~(0x08|0x04); } // clear XMP(bit3? ) & EXIF bits
+        body.push(c); total+=c.length;
+      }
+      var payload=new Uint8Array(total),p=0;
+      for(var b=0;b<body.length;b++){ payload.set(body[b],p); p+=body[b].length; }
+      var out=new Uint8Array(12+payload.length);
+      out[0]=0x52;out[1]=0x49;out[2]=0x46;out[3]=0x46; // RIFF
+      var riffSize=4+payload.length;
+      out[4]=riffSize&0xff;out[5]=(riffSize>>8)&0xff;out[6]=(riffSize>>16)&0xff;out[7]=(riffSize>>24)&0xff;
+      out[8]=0x57;out[9]=0x45;out[10]=0x42;out[11]=0x50; // WEBP
+      out.set(payload,12);
+      return out;
+    }
+  };
+}
+
+function parseAny(u8,mime){
+  if(u8[0]===0x89&&u8[1]===0x50) return parsePNG(u8);
+  if(u8[0]===0xFF&&u8[1]===0xD8) return parseJPEG(u8);
+  if(bytesToLatin1(u8,0,4)==='RIFF') return parseWEBP(u8);
+  return null;
+}
+
+/* ---------- UI wiring ---------- */
+var drop=document.getElementById('drop'), fileInput=document.getElementById('file');
+var resultEl=document.getElementById('result');
+var current=null; // {u8,parsed,file,width,height}
+
+function openPicker(){ fileInput.click(); }
+drop.addEventListener('click',openPicker);
+drop.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openPicker(); }});
+fileInput.addEventListener('change',function(){ if(fileInput.files&&fileInput.files[0]) handleFile(fileInput.files[0]); });
+['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('drag');}); });
+['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('drag');}); });
+drop.addEventListener('drop',function(e){ var f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) handleFile(f); });
+
+document.getElementById('optReenc').addEventListener('change',function(){ document.getElementById('subOpts').classList.toggle('show',this.checked); updateCleanLabel(); });
+document.getElementById('optMeta').addEventListener('change',updateCleanLabel);
+document.getElementById('reFormat').addEventListener('change',function(){ document.getElementById('qualWrap').style.display = this.value==='image/png'?'none':'flex'; });
+document.getElementById('reQual').addEventListener('input',function(){ document.getElementById('qualVal').textContent=this.value+'%'; });
+document.getElementById('resetBtn').addEventListener('click',reset);
+document.getElementById('cleanBtn').addEventListener('click',doClean);
+
+function reset(){
+  current=null; fileInput.value=''; resultEl.classList.remove('show');
+  document.getElementById('doneNote').textContent=''; document.getElementById('doneNote').className='result-note';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function handleFile(file){
+  if(!/image\/(png|jpeg|webp)/.test(file.type) && !/\.(png|jpe?g|webp)$/i.test(file.name)){
+    alert('Vui lòng chọn ảnh PNG, JPG hoặc WEBP.'); return;
+  }
+  var reader=new FileReader();
+  reader.onload=function(){
+    var u8=new Uint8Array(reader.result);
+    var parsed=parseAny(u8,file.type);
+    current={u8:u8,parsed:parsed,file:file,width:0,height:0};
+    // preview + dimensions
+    var url=URL.createObjectURL(file);
+    var img=new Image();
+    img.onload=function(){ current.width=img.naturalWidth; current.height=img.naturalHeight; document.getElementById('mDim').textContent=img.naturalWidth+' × '+img.naturalHeight+' px'; URL.revokeObjectURL(url); };
+    img.src=url;
+    document.getElementById('thumb').src=url;
+    render();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function render(){
+  var f=current.file, parsed=current.parsed;
+  document.getElementById('mName').textContent=f.name;
+  document.getElementById('mType').textContent=parsed?parsed.format:(f.type||'—');
+  document.getElementById('mSize').textContent=fmtBytes(f.size);
+  document.getElementById('mDim').textContent='đang đọc…';
+
+  var findings = parsed? parsed.findings : [];
+  var aiFound = findings.some(function(x){return x.ai;});
+  var metaFound = findings.length>0;
+
+  // verdict
+  var v=document.getElementById('verdict'), vic=document.getElementById('verdictIcon');
+  var vt=document.getElementById('verdictTitle'), vx=document.getElementById('verdictText');
+  var ICON_WARN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.7 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
+  var ICON_OK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg>';
+  if(aiFound){
+    v.className='verdict detected'; vic.innerHTML=ICON_WARN;
+    vt.textContent='Phát hiện dấu vết AI';
+    vx.textContent='File này chứa chữ ký khai báo được tạo bởi AI. Bạn có thể xoá sạch bên dưới.';
+  } else if(metaFound){
+    v.className='verdict detected'; vic.innerHTML=ICON_WARN;
+    vt.textContent='Phát hiện metadata ẩn';
+    vx.textContent='Không thấy chữ ký AI, nhưng file mang theo metadata (EXIF/GPS/chú thích) nên xoá trước khi chia sẻ.';
+  } else {
+    v.className='verdict clean'; vic.innerHTML=ICON_OK;
+    vt.textContent= parsed? 'Sạch — không thấy dấu vết' : 'Không đọc được metadata';
+    vx.textContent= parsed? 'Không tìm thấy C2PA/EXIF/chú thích nào. Bạn vẫn có thể xử lý lại pixel nếu muốn chắc chắn.' : 'Định dạng không phân tích được. Dùng “Xử lý lại pixel” để tạo bản sạch hoàn toàn.';
+  }
+
+  // findings list
+  var ul=document.getElementById('findings'); ul.innerHTML='';
+  document.getElementById('fCount').textContent = findings.length? (findings.length+' mục') : '';
+  if(!findings.length){
+    var li=document.createElement('li'); li.className=''; li.innerHTML='<div class="empty">Không tìm thấy metadata nào trong file.</div>'; ul.appendChild(li);
+  } else {
+    findings.forEach(function(x){
+      var li=document.createElement('li');
+      li.innerHTML='<span class="chip '+(x.ai?'ai':'meta')+'">'+(x.ai?'AI':'META')+'</span>'+
+        '<div class="ftxt"><div class="ft">'+escapeHtml(x.label)+'</div><div class="fd">'+escapeHtml(x.detail)+'</div></div>'+
+        '<span class="fsize mono">'+fmtBytes(x.size)+'</span>';
+      ul.appendChild(li);
+    });
+  }
+  // default: if no parseable metadata, suggest re-encode
+  if(!parsed){ document.getElementById('optReenc').checked=true; document.getElementById('subOpts').classList.add('show'); }
+  updateCleanLabel();
+  resultEl.classList.add('show');
+  document.getElementById('doneNote').textContent=''; document.getElementById('doneNote').className='result-note';
+  resultEl.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function updateCleanLabel(){
+  var meta=document.getElementById('optMeta').checked, re=document.getElementById('optReenc').checked;
+  var lbl=document.getElementById('cleanLabel');
+  if(re) lbl.textContent='Xử lý lại & tải về';
+  else lbl.textContent='Làm sạch & tải về';
+  document.getElementById('cleanBtn').disabled = !meta && !re;
+}
+
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+function baseName(name){ return name.replace(/\.[^.]+$/,''); }
+function extFor(mime){ return mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg'; }
+
+function download(blob,filename){
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url);},1500);
+}
+
+function doClean(){
+  if(!current) return;
+  var meta=document.getElementById('optMeta').checked, re=document.getElementById('optReenc').checked;
+  var note=document.getElementById('doneNote'); note.className='result-note'; note.textContent='Đang xử lý…';
+
+  if(re){
+    // canvas re-encode (also strips ALL metadata inherently)
+    var mime=document.getElementById('reFormat').value;
+    var qual=parseInt(document.getElementById('reQual').value,10)/100;
+    var img=new Image();
+    var url=URL.createObjectURL(current.file);
+    img.onload=function(){
+      var cv=document.createElement('canvas'); cv.width=img.naturalWidth; cv.height=img.naturalHeight;
+      var ctx=cv.getContext('2d'); ctx.drawImage(img,0,0);
+      URL.revokeObjectURL(url);
+      cv.toBlob(function(blob){
+        if(!blob){ note.textContent='Lỗi khi tạo ảnh. Thử định dạng khác.'; return; }
+        var fn=baseName(current.file.name)+'-pixclean.'+extFor(mime);
+        download(blob,fn);
+        finishNote(current.file.size, blob.size, true);
+      }, mime, mime==='image/png'?undefined:qual);
+    };
+    img.onerror=function(){ note.textContent='Không mở được ảnh để xử lý lại.'; };
+    img.src=url;
+  } else {
+    // strip metadata, keep pixels lossless
+    if(!current.parsed){ note.textContent='Định dạng này không xoá metadata trực tiếp được — hãy bật “Xử lý lại pixel”.'; return; }
+    var out=current.parsed.clean();
+    var type = current.parsed.format==='PNG'?'image/png':current.parsed.format==='JPEG'?'image/jpeg':'image/webp';
+    var blob=new Blob([out],{type:type});
+    var ext = current.parsed.format==='PNG'?'png':current.parsed.format==='JPEG'?'jpg':'webp';
+    download(blob, baseName(current.file.name)+'-clean.'+ext);
+    finishNote(current.file.size, blob.size, false);
+  }
+}
+
+function finishNote(oldSize,newSize,re){
+  var note=document.getElementById('doneNote'); note.className='result-note done';
+  var saved=oldSize-newSize;
+  var msg='✓ Đã tải về · <b>'+fmtBytes(newSize)+'</b>';
+  if(!re && saved>0) msg+=' (bỏ <b>'+fmtBytes(saved)+'</b> metadata)';
+  note.innerHTML=msg;
+}
+
+})();
+</script>
+</body>
+</html>
