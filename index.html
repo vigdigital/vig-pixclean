@@ -192,9 +192,29 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .findings .fsize{flex:none;font-size:12px;color:var(--faint);white-space:nowrap;margin-top:2px}
 .empty{padding:22px 18px;color:var(--muted);font-size:14px;text-align:center}
 
+/* Problem / Solution 2 columns */
+.solve-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media (max-width:720px){.solve-grid{grid-template-columns:1fr}}
+.panel.problem{
+  background:color-mix(in srgb,var(--warn-soft) 55%,var(--surface));
+  border-color:color-mix(in srgb,var(--warn) 24%,var(--hairline));
+}
+.panel.problem .phead{border-bottom-color:color-mix(in srgb,var(--warn) 20%,var(--hairline))}
+.panel.problem .phead .lbl{color:var(--warn)}
+.panel.problem .findings li{border-bottom-color:color-mix(in srgb,var(--warn) 15%,var(--hairline))}
+.panel.solution{
+  background:color-mix(in srgb,var(--success-soft) 55%,var(--surface));
+  border-color:color-mix(in srgb,var(--success) 24%,var(--hairline));
+}
+.panel.solution .phead{border-bottom-color:color-mix(in srgb,var(--success) 20%,var(--hairline))}
+.panel.solution .phead .lbl{color:var(--success)}
+.panel .phead .lbl .dot-ic{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:middle;background:currentColor}
+.solution-body{padding:6px 4px}
+
 /* Options */
-.options{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);padding:6px 4px}
 .opt{display:flex;gap:13px;padding:13px 16px;align-items:flex-start;cursor:pointer;border-radius:var(--radius-sm)}
+.panel.solution .opt:hover{background:color-mix(in srgb,#fff 40%,transparent)}
+:root[data-theme="dark"] .panel.solution .opt:hover,:root:not([data-theme="light"]) .panel.solution .opt:hover{background:color-mix(in srgb,#fff 8%,transparent)}
 .opt:hover{background:var(--surface-2)}
 .opt input{margin-top:3px;width:17px;height:17px;accent-color:var(--gold);flex:none;cursor:pointer}
 .opt .ot{font-weight:600;font-size:14.5px}
@@ -227,6 +247,28 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .footnote{margin-top:34px;padding:16px 18px;border-radius:var(--radius);background:var(--surface-2);border:1px solid var(--hairline);font-size:13px;color:var(--muted);line-height:1.6}
 .footnote b{color:var(--ink)}
 .footnote .wm{color:var(--warn);font-weight:600}
+
+/* Audit checklist */
+.audit{margin-top:20px;border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.audit .ahead{padding:18px 20px;border-bottom:1px solid var(--hairline);background:color-mix(in srgb,var(--gold-soft) 40%,var(--surface))}
+.audit .ahead .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:7px}
+.audit .ahead .eyebrow svg{width:14px;height:14px}
+.audit .ahead h3{font-family:"Fraunces",Georgia,serif;font-size:19px;font-weight:600;margin:7px 0 4px;letter-spacing:-.01em}
+.audit .ahead p{margin:0;font-size:13.5px;color:var(--muted);max-width:64ch}
+.audit-groups{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media (max-width:720px){.audit-groups{grid-template-columns:1fr}}
+.agroup{padding:16px 20px;border-bottom:1px solid var(--hairline)}
+.agroup:nth-child(odd){border-right:1px solid var(--hairline)}
+@media (max-width:720px){.agroup:nth-child(odd){border-right:none}}
+.agroup h4{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:8px}
+.agroup h4 .num{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gold);background:var(--gold-soft);border-radius:5px;padding:2px 6px;font-weight:500}
+.acheck{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.acheck li{display:flex;gap:9px;font-size:13px;line-height:1.45;color:var(--muted)}
+.acheck li svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--success)}
+.acheck li b{color:var(--ink);font-weight:600}
+.acheck li code{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:4px;padding:1px 5px;color:var(--gold);word-break:break-word}
+.audit .afoot{padding:13px 20px;font-size:12.5px;color:var(--faint);background:var(--surface-2);border-top:1px solid var(--hairline)}
+
 footer.site{margin-top:30px;padding-top:24px;border-top:1px solid var(--hairline);text-align:center;letter-spacing:.02em}
 footer.site .dot{margin:0 7px;opacity:.5}
 footer.site .credit{display:inline-flex;align-items:center;gap:8px;font-family:"Fraunces",Georgia,serif;font-size:15px;color:var(--ink);font-weight:500}
@@ -302,39 +344,46 @@ footer.site a.credit-link:hover{text-decoration:underline}
       </div>
     </div>
 
-    <div class="panel">
-      <div class="phead">
-        <span class="lbl">Phát hiện bên trong file</span>
-        <span class="count" id="fCount"></span>
+    <div class="solve-grid">
+      <div class="panel problem">
+        <div class="phead">
+          <span class="lbl"><span class="dot-ic"></span>Vấn đề · Phát hiện trong file</span>
+          <span class="count" id="fCount"></span>
+        </div>
+        <ul class="findings" id="findings"></ul>
       </div>
-      <ul class="findings" id="findings"></ul>
-    </div>
 
-    <div class="options">
-      <label class="opt">
-        <input type="checkbox" id="optMeta" checked>
-        <div>
-          <div class="ot">Xoá toàn bộ metadata</div>
-          <div class="od">Loại bỏ C2PA, EXIF, GPS, XMP, IPTC, chú thích ẩn. Giữ nguyên pixel — không giảm chất lượng.</div>
+      <div class="panel solution">
+        <div class="phead">
+          <span class="lbl"><span class="dot-ic"></span>Giải pháp xử lý</span>
         </div>
-      </label>
-      <label class="opt">
-        <input type="checkbox" id="optReenc">
-        <div>
-          <div class="ot">Xử lý lại pixel <span style="color:var(--warn);font-weight:600">(chống watermark ẩn)</span></div>
-          <div class="od">Vẽ lại &amp; nén lại ảnh để phá watermark ẩn kiểu SynthID nằm trong điểm ảnh. Ảnh sẽ được re-encode.</div>
-        </div>
-      </label>
-      <div class="suboptions" id="subOpts">
-        <div class="sub-row">
-          <label>Định dạng xuất:
-            <select id="reFormat">
-              <option value="image/png">PNG (không mất chất lượng)</option>
-              <option value="image/jpeg" selected>JPG (nhẹ hơn)</option>
-              <option value="image/webp">WEBP</option>
-            </select>
+        <div class="solution-body">
+          <label class="opt">
+            <input type="checkbox" id="optMeta" checked>
+            <div>
+              <div class="ot">Xoá toàn bộ metadata</div>
+              <div class="od">Loại bỏ C2PA, EXIF, GPS, XMP, IPTC, chú thích ẩn. Giữ nguyên pixel — không giảm chất lượng.</div>
+            </div>
           </label>
-          <label id="qualWrap">Chất lượng: <input type="range" id="reQual" min="70" max="100" value="92"> <span id="qualVal">92%</span></label>
+          <label class="opt">
+            <input type="checkbox" id="optReenc">
+            <div>
+              <div class="ot">Xử lý lại pixel <span style="color:var(--warn);font-weight:600">(chống watermark ẩn)</span></div>
+              <div class="od">Vẽ lại &amp; nén lại ảnh để phá watermark ẩn kiểu SynthID nằm trong điểm ảnh. Ảnh sẽ được re-encode.</div>
+            </div>
+          </label>
+          <div class="suboptions" id="subOpts">
+            <div class="sub-row">
+              <label>Định dạng xuất:
+                <select id="reFormat">
+                  <option value="image/png">PNG (không mất chất lượng)</option>
+                  <option value="image/jpeg" selected>JPG (nhẹ hơn)</option>
+                  <option value="image/webp">WEBP</option>
+                </select>
+              </label>
+              <label id="qualWrap">Chất lượng: <input type="range" id="reQual" min="70" max="100" value="92"> <span id="qualVal">92%</span></label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -351,6 +400,64 @@ footer.site a.credit-link:hover{text-decoration:underline}
 
   <div class="footnote">
     <b>Lưu ý về watermark trong pixel.</b> Xoá metadata gỡ được chữ ký C2PA và mọi thông tin ẩn trong file. Nhưng một số dịch vụ nhúng thêm <span class="wm">watermark ẩn ngay trong điểm ảnh</span> — thứ này chỉ mờ đi khi bạn <b>xử lý lại pixel</b> (bật tuỳ chọn thứ hai), resize hoặc chụp lại màn hình, và không đảm bảo mất hoàn toàn.
+  </div>
+
+  <div class="audit">
+    <div class="ahead">
+      <div class="eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        Cơ chế phát hiện
+      </div>
+      <h3>Chúng tôi soi gì để nghi ngờ một ảnh do AI tạo?</h3>
+      <p>PixClean quét sâu vào cấu trúc file để tìm các dấu hiệu kỹ thuật dưới đây — toàn bộ chạy ngay trong trình duyệt, ảnh không rời khỏi máy bạn.</p>
+    </div>
+    <div class="audit-groups">
+
+      <div class="agroup">
+        <h4><span class="num">01</span> Chữ ký nguồn gốc (C2PA / Provenance)</h4>
+        <ul class="acheck">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Manifest <b>C2PA</b> nhúng trong file — chunk <code>caBX</code> (PNG) hoặc segment <code>APP11</code>/JUMBF (JPEG)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nhãn <code>digitalSourceType = trainedAlgorithmicMedia</code> — khai báo "tạo bởi thuật toán"</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chữ ký số của nhà phát hành: <b>OpenAI</b>, Google, Adobe — ký qua CA <code>SSL.com&nbsp;C2PA</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Assertion <code>c2pa.actions</code> ghi hành động <code>created</code> / <code>converted</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Timestamp TSA &amp; chuỗi chứng chỉ (certificate chain) đi kèm</li>
+        </ul>
+      </div>
+
+      <div class="agroup">
+        <h4><span class="num">02</span> Metadata do công cụ AI sinh</h4>
+        <ul class="acheck">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Trường <code>softwareAgent</code> / EXIF <b>Software</b>: <code>gpt-image</code>, <code>DALL·E</code>, <code>Firefly</code>, <code>Midjourney</code>…</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>XMP <code>Iptc4xmpExt:DigitalSourceType</code>, <code>dc:creator</code> bất thường</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chunk <code>tEXt</code>/<code>iTXt</code> chứa <b>prompt</b> hoặc <code>parameters</code> (Stable Diffusion / A1111 nhét prompt vào ảnh)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Comment <code>COM</code> trong JPEG ghi tên model / seed</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Thiếu hẳn EXIF máy ảnh thật — không có Make/Model, ống kính, ISO, khẩu độ</li>
+        </ul>
+      </div>
+
+      <div class="agroup">
+        <h4><span class="num">03</span> Watermark ẩn trong điểm ảnh</h4>
+        <ul class="acheck">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>SynthID</b> (Google Imagen / Gemini) — watermark thống kê nhúng thẳng vào pixel</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Assertion <code>c2pa.watermark</code> / soft-binding <code>unbounded</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mẫu tần số bất thường khi phân tích DCT / FFT</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nhiễu đồng đều đặc trưng của bộ giải mã diffusion</li>
+        </ul>
+      </div>
+
+      <div class="agroup">
+        <h4><span class="num">04</span> Dấu hiệu cấu trúc &amp; thống kê</h4>
+        <ul class="acheck">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Kích thước "tròn" đặc trưng model: <code>1024×1024</code>, <code>1536×1024</code>, <code>1792×1024</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Profile màu <b>sRGB</b> đồng nhất, không có dữ liệu cảm biến</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Thiếu bảng lượng tử hoá (quantization table) đặc trưng của hãng máy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hash nội dung khớp soft-binding khai báo trong manifest</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chunk / cờ hiệu lạ không thuộc chuẩn ảnh — dấu tay của trình tạo</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="afoot">⚠ Không dấu hiệu đơn lẻ nào là bằng chứng tuyệt đối — PixClean tổng hợp nhiều tín hiệu để tăng độ tin cậy, và cho phép bạn xoá sạch chúng chỉ với một cú bấm.</div>
   </div>
 
   <footer class="site">
