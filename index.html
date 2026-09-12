@@ -228,7 +228,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 #qualVal{color:var(--gold);font-weight:600;font-variant-numeric:tabular-nums}
 
 /* Actions */
-.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.actions{display:flex;flex-direction:column;gap:11px;align-items:center;text-align:center}
 .btn{
   font-family:inherit;font-size:15px;font-weight:600;border-radius:11px;padding:13px 22px;cursor:pointer;
   border:1px solid transparent;display:inline-flex;align-items:center;gap:9px;transition:transform .05s,box-shadow .15s,background .15s;
@@ -391,7 +391,6 @@ footer.site a.credit-link:hover{text-decoration:underline}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         <span id="cleanLabel">Làm sạch &amp; tải về</span>
       </button>
-      <button class="btn ghost" id="resetBtn">Chọn ảnh khác</button>
       <span class="result-note" id="doneNote"></span>
     </div>
   </section>
@@ -679,7 +678,6 @@ document.getElementById('optReenc').addEventListener('change',function(){ docume
 document.getElementById('optMeta').addEventListener('change',updateCleanLabel);
 document.getElementById('reFormat').addEventListener('change',function(){ document.getElementById('qualWrap').style.display = this.value==='image/png'?'none':'flex'; });
 document.getElementById('reQual').addEventListener('input',function(){ document.getElementById('qualVal').textContent=this.value+'%'; });
-document.getElementById('resetBtn').addEventListener('click',reset);
 document.getElementById('cleanBtn').addEventListener('click',doClean);
 
 function reset(){
