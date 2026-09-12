@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,9 +18,12 @@
   --faint:#948A77;
   --hairline:#E7DECD;
   --hairline-strong:#D8CDB6;
-  --gold:#A9803E;
-  --gold-bright:#B8873A;
-  --gold-soft:#F0E4CD;
+  --gold:#C4275D;
+  --gold-bright:#D4305F;
+  --gold-soft:#FBEDF2;
+  --brand:#C4275D;
+  --brand-bright:#D4305F;
+  --brand-soft:#FBEDF2;
   --success:#3E7A56;
   --success-soft:#E3EFE5;
   --warn:#B4712A;
@@ -41,9 +44,12 @@
     --faint:#877D68;
     --hairline:#332C1E;
     --hairline-strong:#453B28;
-    --gold:#D4AA5C;
-    --gold-bright:#E0B667;
-    --gold-soft:#332913;
+    --gold:#EA6A92;
+    --gold-bright:#F07AA0;
+    --gold-soft:#3A1622;
+    --brand:#EA6A92;
+    --brand-bright:#F07AA0;
+    --brand-soft:#3A1622;
     --success:#7BB68E;
     --success-soft:#20301F;
     --warn:#E3A759;
@@ -62,9 +68,12 @@
   --faint:#877D68;
   --hairline:#332C1E;
   --hairline-strong:#453B28;
-  --gold:#D4AA5C;
-  --gold-bright:#E0B667;
-  --gold-soft:#332913;
+  --gold:#EA6A92;
+  --gold-bright:#F07AA0;
+  --gold-soft:#3A1622;
+  --brand:#EA6A92;
+  --brand-bright:#F07AA0;
+  --brand-soft:#3A1622;
   --success:#7BB68E;
   --success-soft:#20301F;
   --warn:#E3A759;
@@ -279,33 +288,76 @@ footer.site .credit-copy{margin-top:8px;font-size:11.5px;color:var(--faint);opac
 footer.site a.credit-link{color:var(--gold);text-decoration:none;font-weight:600}
 footer.site a.credit-link:hover{text-decoration:underline}
 
+/* ── VIG Tools shared header ── */
+.vig-header{position:sticky;top:0;z-index:100;background:var(--ground);border-bottom:1px solid var(--hairline);padding:0 24px}
+.vig-header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.vig-header-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.vig-header-mark{width:32px;height:32px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vig-header-mark svg{width:18px;height:18px}
+.vig-header-title{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.vig-header-title span{color:var(--brand)}
+.vig-header-nav{display:flex;align-items:center;gap:4px}
+.vig-header-nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:var(--radius-sm);transition:all .15s}
+.vig-header-nav a:hover{color:var(--ink);background:var(--hairline)}
+.vig-header-nav a.active{color:var(--brand);background:var(--brand-soft);font-weight:600}
+.vig-header-nav .sep{width:1px;height:16px;background:var(--hairline);margin:0 4px}
+.vig-nav-toggle{display:none;width:34px;height:34px;border:1px solid var(--hairline);border-radius:var(--radius-sm);background:var(--surface);color:var(--muted);cursor:pointer;align-items:center;justify-content:center}
+.vig-nav-toggle svg{width:18px;height:18px}
+@media (max-width:640px){
+  .vig-header-nav{display:none;position:absolute;top:55px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--hairline);padding:8px 16px 12px;flex-direction:column;gap:2px;box-shadow:var(--shadow)}
+  .vig-header-nav.open{display:flex}
+  .vig-header-nav a{padding:10px 12px;width:100%}
+  .vig-header-nav .sep{display:none}
+  .vig-nav-toggle{display:flex}
+}
+/* ── VIG Tools shared footer ── */
+.vig-footer{border-top:1px solid var(--hairline);padding:32px 24px 24px;margin-top:56px}
+.vig-footer-inner{max-width:960px;margin:0 auto;text-align:center}
+.vig-footer-brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px}
+.vig-footer-mark{width:24px;height:24px;border-radius:6px;background:var(--brand);display:flex;align-items:center;justify-content:center}
+.vig-footer-mark svg{width:13px;height:13px}
+.vig-footer-brand-text{font-size:13px;color:var(--muted)}
+.vig-footer-brand-text a{color:var(--brand);text-decoration:none;font-weight:600}
+.vig-footer-brand-text a:hover{text-decoration:underline}
+.vig-footer-company{font-size:12px;color:var(--faint);margin-bottom:8px}
+.vig-footer-privacy{font-size:11px;color:var(--faint);display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.vig-footer-privacy span{display:inline-flex;align-items:center;gap:4px}
+.vig-footer-privacy .dot{width:3px;height:3px;border-radius:50%;background:var(--hairline-strong)}
+.vig-footer-copy{font-size:11px;color:var(--faint);margin-top:12px}
+.vig-footer-links{display:flex;justify-content:center;gap:16px;margin-top:12px}
+.vig-footer-links a{font-size:12px;color:var(--faint);text-decoration:none}
+.vig-footer-links a:hover{color:var(--brand)}
+
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header class="top">
-    <div class="brand">
-      <div class="mark" aria-hidden="true">
+<header class="vig-header">
+  <div class="vig-header-inner">
+    <a href="https://tools.vigdigital.com/" class="vig-header-brand">
+      <div class="vig-header-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/>
           <path d="m8.5 12 2.4 2.4L15.8 9.5"/>
         </svg>
       </div>
-      <div>
-        <h1>VIG PixClean</h1>
-        <div class="sub"><b>Xử lý ngay trên máy</b> · ảnh không rời trình duyệt</div>
-      </div>
+      <div><div class="vig-header-title"><span>VIG</span> Tools</div></div>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button class="vig-nav-toggle" onclick="document.querySelector('.vig-header-nav').classList.toggle('open')" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+      <nav class="vig-header-nav">
+        <a href="/pixclean/" class="active">PixClean</a>
+        <span class="sep"></span>
+        <a href="https://vigdigital.com/" target="_blank" rel="noopener">vigdigital.com ↗</a>
+      </nav>
     </div>
-    <button class="theme-btn" id="themeBtn" title="Đổi giao diện sáng/tối" aria-label="Đổi giao diện sáng/tối">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
-        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-      </svg>
-    </button>
-  </header>
+  </div>
+</header>
+<div class="wrap">
 
   <section class="hero">
     <h2>Gỡ <span class="g">dấu vết AI</span> &amp; metadata khỏi ảnh của bạn.</h2>
@@ -457,38 +509,40 @@ footer.site a.credit-link:hover{text-decoration:underline}
     <div class="afoot">⚠ Không dấu hiệu đơn lẻ nào là bằng chứng tuyệt đối — PixClean tổng hợp nhiều tín hiệu để tăng độ tin cậy, và cho phép bạn xoá sạch chúng chỉ với một cú bấm.</div>
   </div>
 
-  <footer class="site">
-    <div class="credit">
-      <span class="vmark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg>
-      </span>
-      <span>Phát triển bởi <a class="credit-link" href="https://vigdigital.com/" target="_blank" rel="noopener noreferrer">VIG</a></span>
-    </div>
-    <div class="credit-org">Công ty TNHH Truyền Thông Tiếp Thị VIG</div>
-    <div class="credit-sub">Chạy 100% offline trong trình duyệt <span class="dot">·</span> không server <span class="dot">·</span> không lưu <span class="dot">·</span> không gửi đi</div>
-    <div class="credit-copy">© 2026 VIG Digital · Công cụ nội bộ</div>
-  </footer>
 </div>
+
+<footer class="vig-footer">
+  <div class="vig-footer-inner">
+    <div class="vig-footer-brand">
+      <div class="vig-footer-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg>
+      </div>
+      <span class="vig-footer-brand-text">Phát triển bởi <a href="https://vigdigital.com/" target="_blank" rel="noopener noreferrer">VIG</a></span>
+    </div>
+    <div class="vig-footer-company">Công ty TNHH Truyền Thông Tiếp Thị VIG</div>
+    <div class="vig-footer-privacy">
+      <span>Chạy 100% offline trong trình duyệt</span>
+      <span class="dot"></span>
+      <span>không server</span>
+      <span class="dot"></span>
+      <span>không lưu</span>
+      <span class="dot"></span>
+      <span>không gửi đi</span>
+    </div>
+    <div class="vig-footer-links">
+      <a href="https://vigdigital.com/" target="_blank">Về VIG</a>
+      <a href="https://vigdigital.com/#lien-he" target="_blank">Liên hệ</a>
+      <a href="https://tools.vigdigital.com/">Tất cả tools</a>
+    </div>
+    <div class="vig-footer-copy">© 2026 VIG Digital</div>
+  </div>
+</footer>
 
 <script>
 (function(){
 "use strict";
 
-/* ---------- Theme ---------- */
-var root=document.documentElement, themeBtn=document.getElementById('themeBtn'), themeIcon=document.getElementById('themeIcon');
-var SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
-var MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
-function applyTheme(t){ if(t){root.setAttribute('data-theme',t);} else {root.removeAttribute('data-theme');}
-  var dark = t==='dark' || (!t && window.matchMedia('(prefers-color-scheme:dark)').matches);
-  themeIcon.innerHTML = dark ? SUN : MOON;
-}
-var saved=null; try{saved=localStorage.getItem('vig-pixclean-theme');}catch(e){}
-applyTheme(saved||'light'); // mặc định sáng; vẫn cho chuyển sang tối bằng nút
-themeBtn.addEventListener('click',function(){
-  var cur=root.getAttribute('data-theme');
-  var next = cur==='dark' ? 'light' : cur==='light' ? 'dark' : (window.matchMedia('(prefers-color-scheme:dark)').matches?'light':'dark');
-  applyTheme(next); try{localStorage.setItem('vig-pixclean-theme',next);}catch(e){}
-});
+/* Light-only — đồng bộ chuẩn VIG Tools (data-theme="light" đã khoá ở <html>) */
 
 /* ---------- Helpers ---------- */
 function fmtBytes(n){ if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(1)+' KB'; return (n/1048576).toFixed(2)+' MB'; }
