@@ -296,6 +296,7 @@ footer.site a.credit-link:hover{text-decoration:underline}
 .vig-header-mark svg{width:18px;height:18px}
 .vig-header-title{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em}
 .vig-header-title span{color:var(--brand)}
+.gh-star{display:flex;align-items:center;line-height:0}
 .vig-header-nav{display:flex;align-items:center;gap:4px}
 .vig-header-nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:var(--radius-sm);transition:all .15s}
 .vig-header-nav a:hover{color:var(--ink);background:var(--hairline)}
@@ -345,7 +346,8 @@ footer.site a.credit-link:hover{text-decoration:underline}
       </div>
       <div><div class="vig-header-title"><span>VIG</span> Tools</div></div>
     </a>
-    <div style="display:flex;align-items:center;gap:4px;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="gh-star"><a class="github-button" href="https://github.com/vigdigital/vig-pixclean" data-color-scheme="light" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star vigdigital/vig-pixclean on GitHub">Star</a></span>
       <button class="vig-nav-toggle" onclick="document.querySelector('.vig-header-nav').classList.toggle('open')" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
       </button>
@@ -878,5 +880,6 @@ function finishNote(oldSize,newSize,re){
 
 })();
 </script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
