@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="VIG PixClean — Gỡ dấu vết AI và metadata khỏi ảnh">
+  <rect width="1280" height="360" fill="#F7F3EC"/>
+  <rect x="0" y="356" width="1280" height="4" fill="#C4275D"/>
+
+  <!-- decorative checkerboard on the right -->
+  <g opacity="0.5">
+    <pattern id="checker" width="28" height="28" patternUnits="userSpaceOnUse">
+      <rect width="28" height="28" fill="#F7F3EC"/>
+      <rect width="14" height="14" fill="#EFE7D6"/>
+      <rect x="14" y="14" width="14" height="14" fill="#EFE7D6"/>
+    </pattern>
+    <rect x="980" y="52" width="252" height="252" rx="18" fill="url(#checker)"/>
+    <rect x="980" y="52" width="252" height="252" rx="18" fill="none" stroke="#E7DECD" stroke-width="2"/>
+  </g>
+  <!-- shield inside the frame on the right -->
+  <g transform="translate(1106,178)">
+    <circle r="66" fill="#FBEDF2"/>
+    <g transform="translate(-24,-24) scale(2)" fill="none" stroke="#C4275D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/>
+      <path d="m8.5 12 2.4 2.4L15.8 9.5"/>
+    </g>
+  </g>
+
+  <!-- brand mark -->
+  <g transform="translate(80,96)">
+    <rect width="72" height="72" rx="18" fill="#C4275D"/>
+    <g transform="translate(18,18) scale(1.5)" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/>
+      <path d="m8.5 12 2.4 2.4L15.8 9.5"/>
+    </g>
+  </g>
+
+  <!-- title -->
+  <text x="176" y="150" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="700" letter-spacing="-1">
+    <tspan fill="#C4275D">VIG</tspan><tspan fill="#211C15"> PixClean</tspan>
+  </text>
+
+  <!-- tagline -->
+  <text x="178" y="196" font-family="'Helvetica Neue', Arial, sans-serif" font-size="27" fill="#6E6555">Gỡ dấu vết AI &amp; metadata khỏi ảnh — ngay trong trình duyệt.</text>
+
+  <!-- chips -->
+  <g font-family="'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="600">
+    <g transform="translate(178,236)">
+      <rect width="118" height="42" rx="21" fill="#FBEDF2" stroke="#EBC6D4" stroke-width="1.5"/>
+      <text x="59" y="28" text-anchor="middle" fill="#C4275D">C2PA</text>
+    </g>
+    <g transform="translate(310,236)">
+      <rect width="150" height="42" rx="21" fill="#FBEDF2" stroke="#EBC6D4" stroke-width="1.5"/>
+      <text x="75" y="28" text-anchor="middle" fill="#C4275D">EXIF / GPS</text>
+    </g>
+    <g transform="translate(474,236)">
+      <rect width="128" height="42" rx="21" fill="#FBEDF2" stroke="#EBC6D4" stroke-width="1.5"/>
+      <text x="64" y="28" text-anchor="middle" fill="#C4275D">SynthID</text>
+    </g>
+  </g>
+
+  <!-- privacy line -->
+  <text x="180" y="316" font-family="'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#948A77">100% offline · không server · không lưu · không gửi đi</text>
+</svg>
