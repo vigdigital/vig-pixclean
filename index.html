@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VIG PixClean</title>
-<meta name="description" content="Xóa dấu vết AI &amp; metadata khỏi ảnh — xử lý ngay trên trình duyệt, ảnh không rời khỏi máy bạn.">
+<title>Xoá dấu vết AI &amp; metadata khỏi ảnh (C2PA, EXIF) – PixClean | VIG Digital</title>
+<meta name="description" content="Công cụ online xoá chữ ký AI (C2PA/Content Credentials), EXIF, GPS, watermark khỏi ảnh PNG/JPG/WEBP — xử lý 100% trong trình duyệt, ảnh không rời khỏi máy bạn. PixClean by VIG Digital.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -311,9 +311,15 @@ footer.site a.credit-link:hover{text-decoration:underline}
   .vig-header-nav .sep{display:none}
   .vig-nav-toggle{display:flex}
 }
-/* ── VIG Tools shared footer ── */
-.vig-footer{border-top:1px solid var(--hairline);padding:32px 24px 24px;margin-top:56px}
+/* ── VIG Tools shared footer (compact) ── */
+.vig-footer{border-top:1px solid var(--hairline);padding:20px 24px;margin-top:44px}
 .vig-footer-inner{max-width:960px;margin:0 auto;text-align:center}
+.vig-footer-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px 11px;font-size:13px;color:var(--muted);margin-bottom:9px}
+.vig-footer-row a{color:var(--muted);text-decoration:none}
+.vig-footer-row a:hover{color:var(--brand)}
+.vig-footer-row .fmark{width:19px;height:19px;border-radius:5px;background:var(--brand);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.vig-footer-row .fmark svg{width:11px;height:11px}
+.vig-footer-row b a{color:var(--brand);font-weight:600}
 .vig-footer-brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px}
 .vig-footer-mark{width:24px;height:24px;border-radius:6px;background:var(--brand);display:flex;align-items:center;justify-content:center}
 .vig-footer-mark svg{width:13px;height:13px}
@@ -515,28 +521,18 @@ footer.site a.credit-link:hover{text-decoration:underline}
 
 <footer class="vig-footer">
   <div class="vig-footer-inner">
-    <div class="vig-footer-brand">
-      <div class="vig-footer-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg>
-      </div>
-      <span class="vig-footer-brand-text">Phát triển bởi <a href="https://vigdigital.com/" target="_blank" rel="noopener noreferrer">VIG</a></span>
-    </div>
-    <div class="vig-footer-company">Công ty TNHH Truyền Thông Tiếp Thị VIG</div>
-    <div class="vig-footer-privacy">
-      <span>Chạy 100% offline trong trình duyệt</span>
+    <div class="vig-footer-row">
+      <span class="fmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg></span>
+      <b><a href="https://vigdigital.com/" target="_blank" rel="noopener noreferrer">VIG Digital</a></b>
       <span class="dot"></span>
-      <span>không server</span>
-      <span class="dot"></span>
-      <span>không lưu</span>
-      <span class="dot"></span>
-      <span>không gửi đi</span>
-    </div>
-    <div class="vig-footer-links">
-      <a href="https://vigdigital.com/" target="_blank">Về VIG</a>
-      <a href="https://vigdigital.com/#lien-he" target="_blank">Liên hệ</a>
+      <a href="https://vigdigital.com/#lien-he" target="_blank" rel="noopener">Liên hệ</a>
       <a href="https://tools.vigdigital.com/">Tất cả tools</a>
     </div>
-    <div class="vig-footer-copy">© 2026 VIG Digital</div>
+    <div class="vig-footer-privacy">
+      <span>100% offline</span><span class="dot"></span>
+      <span>không lưu, không gửi đi</span><span class="dot"></span>
+      <span>© 2026 VIG Digital</span>
+    </div>
   </div>
 </footer>
 
