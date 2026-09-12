@@ -255,11 +255,9 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .audit .ahead .eyebrow svg{width:14px;height:14px}
 .audit .ahead h3{font-family:"Fraunces",Georgia,serif;font-size:19px;font-weight:600;margin:7px 0 4px;letter-spacing:-.01em}
 .audit .ahead p{margin:0;font-size:13.5px;color:var(--muted);max-width:64ch}
-.audit-groups{display:grid;grid-template-columns:1fr 1fr;gap:0}
-@media (max-width:720px){.audit-groups{grid-template-columns:1fr}}
+.audit-groups{display:flex;flex-direction:column}
 .agroup{padding:16px 20px;border-bottom:1px solid var(--hairline)}
-.agroup:nth-child(odd){border-right:1px solid var(--hairline)}
-@media (max-width:720px){.agroup:nth-child(odd){border-right:none}}
+.agroup:last-child{border-bottom:none}
 .agroup h4{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:8px}
 .agroup h4 .num{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gold);background:var(--gold-soft);border-radius:5px;padding:2px 6px;font-weight:500}
 .acheck{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
