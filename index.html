@@ -567,7 +567,7 @@ footer.site a.credit-link:hover{text-decoration:underline}
 /* ---------- Usage counter (đếm lượt dùng, tổng chung qua count.php) ---------- */
 var USAGE_URL='count.php';
 function showUsage(n){
-  if(typeof n!=='number'||n<0) return;
+  if(typeof n!=='number'||n<1) return; // ẩn khi 0, chỉ hiện khi đã có lượt
   document.getElementById('usageCount').textContent=n.toLocaleString('vi-VN');
   document.getElementById('usage').hidden=false;
 }
