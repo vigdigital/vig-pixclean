@@ -32,7 +32,7 @@
 | 🏷️ **Nhận diện dấu vết AI** | Gắn nhãn **AI** vs **META**, mô tả rõ nguồn (OpenAI, Google, Adobe…) |
 | 🧹 **Xoá metadata (lossless)** | Loại bỏ toàn bộ metadata, **giữ nguyên pixel** — không giảm chất lượng |
 | 🎨 **Xử lý lại pixel** | Vẽ & nén lại ảnh để làm mờ watermark ẩn kiểu SynthID nằm trong điểm ảnh |
-| 🔒 **100% offline** | Không server, không upload — ảnh xử lý ngay trong trình duyệt |
+| 🔒 **Xử lý trong trình duyệt** | Không upload đi đâu cả — ảnh xử lý ngay trên máy bạn |
 | 📦 **Không phụ thuộc** | Một file `index.html`, không build, không thư viện |
 
 ## ⚙️ Cách hoạt động
