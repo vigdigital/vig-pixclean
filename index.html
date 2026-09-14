@@ -176,9 +176,10 @@ a{color:var(--gold)}
 .footnote .wm{color:var(--warn);font-weight:600}
 
 /* Hero perks (3 dòng) */
-.perks{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-.perks li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);line-height:1.45}
-.perks li svg{width:18px;height:18px;flex:none;margin-top:2px;color:var(--brand)}
+.perks{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+@media (max-width:560px){.perks{grid-template-columns:1fr}}
+.perks li{display:flex;gap:9px;align-items:center;font-size:14.5px;color:var(--ink);line-height:1.35}
+.perks li svg{width:17px;height:17px;flex:none;color:var(--brand)}
 .perks li b{color:var(--ink);font-weight:600}
 
 /* Audit checklist */
@@ -221,12 +222,12 @@ a{color:var(--gold)}
     <h2>Gỡ <span class="g">dấu vết AI</span> &amp; metadata khỏi ảnh của bạn.</h2>
     <p>Ảnh tạo từ ChatGPT, Gemini, Firefly… mang theo chữ ký C2PA khai báo “tạo bởi AI”, cùng EXIF/GPS ẩn. VIG PixClean đọc và xoá sạch chúng — tất cả chạy trong trình duyệt, không upload đi đâu cả.</p>
     <ul class="perks">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Ảnh trông tự nhiên hơn</b> — gỡ nhãn “tạo bởi AI” (C2PA) nhúng sẵn trong file.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Tránh bị gắn cờ khi đăng web</b> — Facebook/LinkedIn/Google đọc C2PA để dán nhãn “AI-generated”.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Giảm dung lượng ảnh</b> — bỏ metadata thừa, tuỳ chọn nén lại giúp ảnh nhẹ hơn, tải nhanh hơn.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Xoá vị trí &amp; thiết bị (EXIF/GPS)</b> — bảo vệ riêng tư trước khi chia sẻ.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Ảnh sẵn sàng xuất bản</b> — chuẩn hoá metadata, tối ưu để đăng lên web, mạng xã hội &amp; chiến dịch.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Nhanh, không cần cài app</b> — kéo thả là xong, xử lý ngay trong trình duyệt.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Ảnh trông tự nhiên hơn</b></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Tránh bị gắn cờ khi đăng web</b></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Giảm dung lượng ảnh</b></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Xoá vị trí &amp; thiết bị (EXIF/GPS)</b></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Ảnh sẵn sàng xuất bản</b></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Nhanh, không cần cài app</b></li>
     </ul>
   </section>
 
