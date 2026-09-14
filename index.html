@@ -5,83 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Xoá dấu vết AI &amp; metadata khỏi ảnh (C2PA, EXIF) – PixClean | VIG Digital</title>
 <meta name="description" content="Công cụ online xoá chữ ký AI (C2PA/Content Credentials), EXIF, GPS, watermark khỏi ảnh PNG/JPG/WEBP — xử lý 100% trong trình duyệt, ảnh không rời khỏi máy bạn. PixClean by VIG Digital.">
+<!-- Google Analytics 4 (VIG Tools) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BGH49D7XMW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BGH49D7XMW');</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<!-- Shared design system: design tokens + header + footer -->
+<link rel="stylesheet" href="/shared/vig-tools.css">
 <style>
-:root{
-  --ground:#F7F3EC;
-  --surface:#FFFFFF;
-  --surface-2:#FCFAF4;
-  --ink:#211C15;
-  --muted:#6E6555;
-  --faint:#948A77;
-  --hairline:#E7DECD;
-  --hairline-strong:#D8CDB6;
-  --gold:#C4275D;
-  --gold-bright:#D4305F;
-  --gold-soft:#FBEDF2;
-  --brand:#C4275D;
-  --brand-bright:#D4305F;
-  --brand-soft:#FBEDF2;
-  --success:#3E7A56;
-  --success-soft:#E3EFE5;
-  --warn:#B4712A;
-  --warn-soft:#F6E9D3;
-  --danger:#B0473B;
-  --danger-soft:#F6E0DB;
-  --shadow:0 1px 2px rgba(33,28,21,.04),0 12px 32px -12px rgba(33,28,21,.16);
-  --radius:14px;
-  --radius-sm:9px;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --ground:#14110B;
-    --surface:#1E1A12;
-    --surface-2:#231E15;
-    --ink:#F1EBDD;
-    --muted:#A99E88;
-    --faint:#877D68;
-    --hairline:#332C1E;
-    --hairline-strong:#453B28;
-    --gold:#EA6A92;
-    --gold-bright:#F07AA0;
-    --gold-soft:#3A1622;
-    --brand:#EA6A92;
-    --brand-bright:#F07AA0;
-    --brand-soft:#3A1622;
-    --success:#7BB68E;
-    --success-soft:#20301F;
-    --warn:#E3A759;
-    --warn-soft:#352713;
-    --danger:#E08A7D;
-    --danger-soft:#37211C;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#14110B;
-  --surface:#1E1A12;
-  --surface-2:#231E15;
-  --ink:#F1EBDD;
-  --muted:#A99E88;
-  --faint:#877D68;
-  --hairline:#332C1E;
-  --hairline-strong:#453B28;
-  --gold:#EA6A92;
-  --gold-bright:#F07AA0;
-  --gold-soft:#3A1622;
-  --brand:#EA6A92;
-  --brand-bright:#F07AA0;
-  --brand-soft:#3A1622;
-  --success:#7BB68E;
-  --success-soft:#20301F;
-  --warn:#E3A759;
-  --warn-soft:#352713;
-  --danger:#E08A7D;
-  --danger-soft:#37211C;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
-}
+/* Alias: tool dùng --gold*; ánh xạ sang brand của design system (tokens ở vig-tools.css) */
+:root{ --gold:var(--brand); --gold-bright:var(--brand-bright); --gold-soft:var(--brand-soft); }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -97,27 +33,6 @@ body{
 .wrap{max-width:900px;margin:0 auto;padding:32px 20px 72px}
 a{color:var(--gold)}
 .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
-
-/* Header */
-header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}
-.brand{display:flex;align-items:center;gap:13px}
-.mark{
-  width:42px;height:42px;border-radius:11px;flex:none;
-  background:linear-gradient(150deg,var(--gold-bright),var(--gold));
-  display:grid;place-items:center;
-  box-shadow:0 6px 16px -6px color-mix(in srgb,var(--gold) 60%,transparent);
-}
-.mark svg{width:23px;height:23px;display:block}
-.brand h1{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em;line-height:1}
-.brand .sub{font-size:12.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
-.brand .sub b{color:var(--gold);font-weight:600}
-.theme-btn{
-  border:1px solid var(--hairline-strong);background:var(--surface);color:var(--muted);
-  width:38px;height:38px;border-radius:10px;cursor:pointer;display:grid;place-items:center;
-  transition:color .15s,border-color .15s;flex:none;
-}
-.theme-btn:hover{color:var(--ink);border-color:var(--gold)}
-.theme-btn svg{width:18px;height:18px}
 
 /* Hero copy */
 .hero{margin-bottom:26px}
@@ -285,64 +200,14 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .acheck li code{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gold);overflow-wrap:anywhere}
 .audit .afoot{padding:13px 20px;font-size:12.5px;color:var(--faint);background:var(--surface-2);border-top:1px solid var(--hairline)}
 
-footer.site{margin-top:30px;padding-top:24px;border-top:1px solid var(--hairline);text-align:center;letter-spacing:.02em}
-footer.site .dot{margin:0 7px;opacity:.5}
-footer.site .credit{display:inline-flex;align-items:center;gap:8px;font-family:"Fraunces",Georgia,serif;font-size:15px;color:var(--ink);font-weight:500}
-footer.site .credit .vmark{width:22px;height:22px;border-radius:6px;background:linear-gradient(150deg,var(--gold-bright),var(--gold));display:grid;place-items:center;flex:none}
-footer.site .credit .vmark svg{width:12px;height:12px}
-footer.site .credit b{color:var(--gold);font-weight:600}
-footer.site .credit-org{margin-top:4px;font-size:12.5px;color:var(--muted)}
-footer.site .credit-sub{margin-top:11px;font-size:12px;color:var(--faint)}
-footer.site .credit-copy{margin-top:8px;font-size:11.5px;color:var(--faint);opacity:.85}
-footer.site a.credit-link{color:var(--gold);text-decoration:none;font-weight:600}
-footer.site a.credit-link:hover{text-decoration:underline}
-
-/* ── VIG Tools shared header ── */
-.vig-header{position:sticky;top:0;z-index:100;background:var(--ground);border-bottom:1px solid var(--hairline);padding:0 24px}
-.vig-header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
-.vig-header-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.vig-header-mark{width:32px;height:32px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.vig-header-mark svg{width:18px;height:18px}
-.vig-header-title{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em}
-.vig-header-title span{color:var(--brand)}
-.gh-star{display:flex;align-items:center;line-height:0}
-.vig-header-nav{display:flex;align-items:center;gap:4px}
-.vig-header-nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:var(--radius-sm);transition:all .15s}
-.vig-header-nav a:hover{color:var(--ink);background:var(--hairline)}
-.vig-header-nav a.active{color:var(--brand);background:var(--brand-soft);font-weight:600}
-.vig-header-nav .sep{width:1px;height:16px;background:var(--hairline);margin:0 4px}
-.vig-nav-toggle{display:none;width:34px;height:34px;border:1px solid var(--hairline);border-radius:var(--radius-sm);background:var(--surface);color:var(--muted);cursor:pointer;align-items:center;justify-content:center}
-.vig-nav-toggle svg{width:18px;height:18px}
-@media (max-width:640px){
-  .vig-header-nav{display:none;position:absolute;top:55px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--hairline);padding:8px 16px 12px;flex-direction:column;gap:2px;box-shadow:var(--shadow)}
-  .vig-header-nav.open{display:flex}
-  .vig-header-nav a{padding:10px 12px;width:100%}
-  .vig-header-nav .sep{display:none}
-  .vig-nav-toggle{display:flex}
-}
-/* ── VIG Tools shared footer (compact) ── */
-.vig-footer{border-top:1px solid var(--hairline);padding:20px 24px;margin-top:44px}
-.vig-footer-inner{max-width:960px;margin:0 auto;text-align:center}
-.vig-footer-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px 11px;font-size:13px;color:var(--muted);margin-bottom:9px}
-.vig-footer-row a{color:var(--muted);text-decoration:none}
-.vig-footer-row a:hover{color:var(--brand)}
-.vig-footer-row .fmark{width:19px;height:19px;border-radius:5px;background:var(--brand);display:inline-flex;align-items:center;justify-content:center;flex:none}
-.vig-footer-row .fmark svg{width:11px;height:11px}
-.vig-footer-row b a{color:var(--brand);font-weight:600}
-.vig-footer-brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px}
-.vig-footer-mark{width:24px;height:24px;border-radius:6px;background:var(--brand);display:flex;align-items:center;justify-content:center}
-.vig-footer-mark svg{width:13px;height:13px}
-.vig-footer-brand-text{font-size:13px;color:var(--muted)}
-.vig-footer-brand-text a{color:var(--brand);text-decoration:none;font-weight:600}
-.vig-footer-brand-text a:hover{text-decoration:underline}
-.vig-footer-company{font-size:12px;color:var(--faint);margin-bottom:8px}
-.vig-footer-privacy{font-size:11px;color:var(--faint);display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-.vig-footer-privacy span{display:inline-flex;align-items:center;gap:4px}
-.vig-footer-privacy .dot{width:3px;height:3px;border-radius:50%;background:var(--hairline-strong)}
-.vig-footer-copy{font-size:11px;color:var(--faint);margin-top:12px}
-.vig-footer-links{display:flex;justify-content:center;gap:16px;margin-top:12px}
-.vig-footer-links a{font-size:12px;color:var(--faint);text-decoration:none}
-.vig-footer-links a:hover{color:var(--brand)}
+/* Hero tool-brand + GitHub star (đưa xuống hero, header dùng shared VIG Tools) */
+.tool-brand{display:flex;align-items:center;gap:11px;margin-bottom:16px;flex-wrap:wrap}
+.tool-brand .tb-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,var(--brand-bright),var(--brand));display:grid;place-items:center;flex:none;box-shadow:0 5px 14px -6px color-mix(in srgb,var(--brand) 60%,transparent)}
+.tool-brand .tb-mark svg{width:19px;height:19px}
+.tool-brand .tb-name{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;letter-spacing:-.01em}
+.tool-brand .tb-by{font-size:12.5px;color:var(--muted)}
+.tool-brand .tb-sep{width:1px;height:16px;background:var(--hairline-strong)}
+.tool-brand .gh-star{display:flex;align-items:center;line-height:0}
 
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -350,33 +215,17 @@ footer.site a.credit-link:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<header class="vig-header">
-  <div class="vig-header-inner">
-    <a href="https://tools.vigdigital.com/" class="vig-header-brand">
-      <div class="vig-header-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/>
-          <path d="m8.5 12 2.4 2.4L15.8 9.5"/>
-        </svg>
-      </div>
-      <div><div class="vig-header-title"><span>VIG</span> Tools</div></div>
-    </a>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <span class="gh-star"><a class="github-button" href="https://github.com/vigdigital/vig-pixclean" data-color-scheme="light" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star vigdigital/vig-pixclean on GitHub">Star</a></span>
-      <button class="vig-nav-toggle" onclick="document.querySelector('.vig-header-nav').classList.toggle('open')" aria-label="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
-      </button>
-      <nav class="vig-header-nav">
-        <a href="/pixclean/" class="active">PixClean</a>
-        <span class="sep"></span>
-        <a href="https://vigdigital.com/" target="_blank" rel="noopener">vigdigital.com ↗</a>
-      </nav>
-    </div>
-  </div>
-</header>
+<!-- Header (VIG Tools) & Footer tự động inject bởi /shared/vig-tools.js -->
 <div class="wrap">
 
   <section class="hero">
+    <div class="tool-brand">
+      <span class="tb-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg></span>
+      <span class="tb-name">PixClean</span>
+      <span class="tb-by">by VIG Digital</span>
+      <span class="tb-sep"></span>
+      <span class="gh-star"><a class="github-button" href="https://github.com/vigdigital/vig-pixclean" data-color-scheme="light" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star vigdigital/vig-pixclean on GitHub">Star</a></span>
+    </div>
     <h2>Gỡ <span class="g">dấu vết AI</span> &amp; metadata khỏi ảnh của bạn.</h2>
     <p>Ảnh tạo từ ChatGPT, Gemini, Firefly… mang theo chữ ký C2PA khai báo “tạo bởi AI”, cùng EXIF/GPS ẩn. VIG PixClean đọc và xoá sạch chúng — tất cả chạy trong trình duyệt, không upload đi đâu cả.</p>
     <ul class="perks">
@@ -540,23 +389,7 @@ footer.site a.credit-link:hover{text-decoration:underline}
   </div>
 
 </div>
-
-<footer class="vig-footer">
-  <div class="vig-footer-inner">
-    <div class="vig-footer-row">
-      <span class="fmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 12 3l9 2.5v6c0 5-3.7 8.4-9 9.5-5.3-1.1-9-4.5-9-9.5z"/><path d="m8.5 12 2.4 2.4L15.8 9.5"/></svg></span>
-      <b><a href="https://vigdigital.com/" target="_blank" rel="noopener noreferrer">VIG Digital</a></b>
-      <span class="dot"></span>
-      <a href="https://vigdigital.com/#lien-he" target="_blank" rel="noopener">Liên hệ</a>
-      <a href="https://tools.vigdigital.com/">Tất cả tools</a>
-    </div>
-    <div class="vig-footer-privacy">
-      <span>Xử lý ngay trong trình duyệt</span><span class="dot"></span>
-      <span>Không upload dữ liệu</span><span class="dot"></span>
-      <span>© 2026 VIG Digital</span>
-    </div>
-  </div>
-</footer>
+<!-- Footer tự động inject bởi /shared/vig-tools.js -->
 
 <script>
 (function(){
@@ -916,5 +749,7 @@ function finishNote(oldSize,newSize,re){
 })();
 </script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Shared header & footer (VIG Tools) -->
+<script src="/shared/vig-tools.js" defer></script>
 </body>
 </html>
