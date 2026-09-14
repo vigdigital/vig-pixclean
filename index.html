@@ -141,6 +141,9 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .drop .dz-title{font-weight:600;font-size:17px;margin:0 0 5px}
 .drop .dz-hint{color:var(--muted);font-size:14px;margin:0}
 .drop .dz-formats{margin-top:12px;font-size:12px;color:var(--faint);letter-spacing:.04em;text-transform:uppercase}
+.usage{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13.5px;color:var(--muted)}
+.usage svg{width:16px;height:16px;color:var(--brand);flex:none}
+.usage b{color:var(--brand);font-weight:600;font-variant-numeric:tabular-nums}
 
 /* Result card */
 .result{margin-top:24px;display:none;flex-direction:column;gap:18px}
@@ -398,6 +401,11 @@ footer.site a.credit-link:hover{text-decoration:underline}
     <input type="file" id="file" accept="image/png,image/jpeg,image/webp" class="sr">
   </div>
 
+  <div class="usage" id="usage" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L6 21"/></svg>
+    Đã xử lý <b id="usageCount">–</b> ảnh
+  </div>
+
   <section class="result" id="result" aria-live="polite">
     <div class="verdict" id="verdict">
       <div class="vic" id="verdictIcon"></div>
@@ -555,6 +563,22 @@ footer.site a.credit-link:hover{text-decoration:underline}
 "use strict";
 
 /* Light-only — đồng bộ chuẩn VIG Tools (data-theme="light" đã khoá ở <html>) */
+
+/* ---------- Usage counter (đếm lượt dùng, tổng chung qua count.php) ---------- */
+var USAGE_URL='count.php';
+function showUsage(n){
+  if(typeof n!=='number'||n<0) return;
+  document.getElementById('usageCount').textContent=n.toLocaleString('vi-VN');
+  document.getElementById('usage').hidden=false;
+}
+function fetchUsage(hit){
+  fetch(USAGE_URL+(hit?'?hit=1':''),{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){ if(d&&typeof d.count==='number') showUsage(d.count); })
+    .catch(function(){}); // offline / chưa có PHP -> ẩn, không phá tool
+}
+fetchUsage(false); // tải tổng khi mở trang
+function bumpUsage(){ fetchUsage(true); }
 
 /* ---------- Helpers ---------- */
 function fmtBytes(n){ if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(1)+' KB'; return (n/1048576).toFixed(2)+' MB'; }
@@ -756,6 +780,7 @@ function handleFile(file){
   if(!/image\/(png|jpeg|webp)/.test(file.type) && !/\.(png|jpe?g|webp)$/i.test(file.name)){
     alert('Vui lòng chọn ảnh PNG, JPG hoặc WEBP.'); return;
   }
+  bumpUsage(); // thả ảnh hợp lệ = tính 1 lượt
   var reader=new FileReader();
   reader.onload=function(){
     var u8=new Uint8Array(reader.result);

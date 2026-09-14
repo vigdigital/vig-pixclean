@@ -3,3 +3,4 @@ Icon?
 _test.*
 *.log
 node_modules/
+count.txt
